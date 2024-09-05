@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ai+Astar.cpp" />
     <ClCompile Include="Ai+Djikstra.cpp" />
     <ClCompile Include="Ai+GetNeighbours.cpp" />
     <ClCompile Include="Ai.cpp" />

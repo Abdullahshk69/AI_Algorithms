@@ -56,6 +56,10 @@ public:
     Color djikstraColor = Color{ 0, 255, 0, 150 };
     void Djikstra(Node* start, Node* goal);
 
+    //A*
+    std::vector<Node*> astarTacedPath;
+    Color astarColor = Color{ 0, 255, 0, 150 };
+    void Astar(Node* start, Node* goal);
 
 };
 

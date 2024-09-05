@@ -1,5 +1,6 @@
 #include "Ai.h"
 #include <queue>
+#include <iostream>
 
 void Ai::Djikstra(Node* start, Node* goal)
 {
@@ -31,6 +32,7 @@ void Ai::Djikstra(Node* start, Node* goal)
 
 	// we begin all of the nodes at infinity cost
 	start->gCost = 0;
+	start->step = 0;
 	openSet.push(start);
 
 	while (!openSet.empty())
@@ -41,9 +43,18 @@ void Ai::Djikstra(Node* start, Node* goal)
 		openSet.pop();
 
 		// what do you want to do with the current now!?
-		if (current->atSameSpot(*goal));	// we have reached there
+		if (current->atSameSpot(*goal))	// we have reached there
 		{
+			std::cout << "Path Found!" << endl;
 			// re-construct the path. so we know how we got here
+			while (current != nullptr)
+			{
+				djikstraTacedPath.push_back(current);
+				current = current->parent;
+			}
+			reverse(djikstraTacedPath.begin(), djikstraTacedPath.end());
+			std::cout << "Path Size: " << djikstraTacedPath.size() << endl;
+			return;
 		}
 
 		for (Node* neighbour : GetNeighbours(current))
@@ -66,5 +77,7 @@ void Ai::Djikstra(Node* start, Node* goal)
 			}
 		}
 	}
+
+	std::cout << "No path found!" << endl;
 
 }
