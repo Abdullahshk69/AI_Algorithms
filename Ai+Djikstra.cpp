@@ -46,9 +46,9 @@ void Ai::Djikstra(Node* start, Node* goal)
 			// re-construct the path. so we know how we got here
 		}
 
-		for (Node* neightbour : GetNeighbours(current))
+		for (Node* neighbour : GetNeighbours(current))
 		{
-			if (neightbour->blocked || neightbour->visited)
+			if (neighbour->blocked || neighbour->visited)
 			{
 				continue;
 			}
@@ -56,13 +56,13 @@ void Ai::Djikstra(Node* start, Node* goal)
 			// calculate the tentative cost
 			float tentativeCost = current->gCost + 1;	// assuming a uniform cost
 
-			if (tentativeCost < neightbour->gCost)	// this path to the neighbour is better
+			if (tentativeCost < neighbour->gCost)	// this path to the neighbour is better
 			{
-				neightbour->gCost = tentativeCost;
-				neightbour->parent = current;
-				neightbour->visited = true;
-				neightbour->step = current->step + 1;
-
+				neighbour->gCost = tentativeCost;
+				neighbour->parent = current;
+				neighbour->visited = true;
+				neighbour->step = current->step + 1;
+				openSet.push(neighbour);
 			}
 		}
 	}
