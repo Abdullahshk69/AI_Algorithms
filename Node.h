@@ -6,7 +6,15 @@
 
 using namespace std;
 
-
+enum class NodeState
+{
+    Idle,
+    Blocked,
+    Exploring,
+    Visited,
+    Goal,
+    Start
+};
 
 
 // Standalone Node Struct
@@ -14,26 +22,32 @@ struct Node
 {
     int row, col;
     Vector2 position;
-    Color fillColor, outlineColor;
-    bool blocked = false;
-    float weight = 0;
+    Color fillColor = RAYWHITE, outlineColor = LIGHTGRAY;
 
     int step = -1; // we keep this -1 for A and B and set costText Manually
     string costText = "";
 
-    // Constructor for convenience
-    Node(int row = 0, int col = 0, Vector2 position = {},
-         Color fillColor = BLACK, Color outlineColor = BLACK, bool blocked = false)
-        : row(row), col(col), position(position), fillColor(fillColor), outlineColor(outlineColor), blocked(blocked) {}
+    NodeState currentState = NodeState::Idle;
+
+    // New Constructor
+    Node(int row = 0, int col = 0, Vector2 position = {})
+    {
+        this->row = row;
+        this->col = col;
+        this->position = position;
+    }
+
+    void SetState(NodeState newState)
+    {
+        currentState = newState;
+        fillColor = GetColorForState(newState);
+    }
 
     // Draw the node on the screen
     void Draw()
     {
-        if (blocked)
-            DrawRectangleV(position, Vector2{50, 50}, fillColor);
-        else
-            DrawRectangleLines(position.x, position.y, 50, 50, outlineColor);
-
+        DrawRectangleV(position, Vector2{50, 50}, fillColor);
+        DrawRectangleLines(position.x, position.y, 50, 50, outlineColor);
 
 
         // Draw Number
@@ -52,29 +66,36 @@ struct Node
         DrawText(costText.c_str(), textPosition.x, textPosition.y, 20, BLACK);
     }
 
+    Color GetColorForState(NodeState state)
+    {
+        switch (state)
+        {
+            case NodeState::Idle:
+                return RAYWHITE;
+                break;
+            case NodeState::Blocked:
+                return DARKGRAY;
+                break;
+            case NodeState::Exploring:
+                return YELLOW;
+                break;
+            case NodeState::Visited:
+                return ORANGE;
+                break;
+            case NodeState::Goal:
+                return GREEN;
+                break;
+            case NodeState::Start:
+                return BLUE;
+                break;
+            default:
+                return RAYWHITE;
+        }
+    }
+
     void DrawPath (Color color)
     {
         DrawRectangleV(position, Vector2{ 50, 50 }, color);
-    }
-
-    void DrawHotspot()
-    {
-        if (weight == 0)
-            return;
-        DrawRectangleV(position, Vector2{ 50, 50 }, LIGHTGRAY);
-
-        costText = to_string(static_cast<int>(weight));
-
-
-        // Measure the text size to center it
-        int textWidth = MeasureText(costText.c_str(), 20);
-        int textHeight = 20;  // Font size is 20
-
-        // Calculate the center position for the text
-        Vector2 textPosition = { position.x + 25 - textWidth / 2, position.y + 25 - textHeight / 2 };
-
-        // Draw the text in the center of the rectangle
-        DrawText(costText.c_str(), textPosition.x, textPosition.y, 20, BLACK);
     }
 
     // A* related costs
