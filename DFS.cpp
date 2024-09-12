@@ -38,10 +38,10 @@ void Ai::DFS(Node* start, Node* goal)
 
 		for (Node* neighbour : GetNeighbours(current))
 		{
-			if (neighbour->blocked || neighbour->visited)
+			/*if (neighbour->blocked || neighbour->visited)
 			{
 				continue;
-			}
+			}*/
 
 			neighbour->parent = current;
 			neighbour->visited = true;

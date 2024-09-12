@@ -59,10 +59,10 @@ void Ai::Djikstra(Node* start, Node* goal)
 
 		for (Node* neighbour : GetNeighbours(current))
 		{
-			if (neighbour->blocked || neighbour->visited)
+			/*if (neighbour->blocked || neighbour->visited)
 			{
 				continue;
-			}
+			}*/
 
 			// calculate the tentative cost
 			float tentativeCost = current->gCost + 1;	// assuming a uniform cost

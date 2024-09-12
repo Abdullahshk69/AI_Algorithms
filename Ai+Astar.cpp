@@ -64,10 +64,10 @@ void Ai::Astar(Node* start, Node* goal)
 
 		for (Node* neighbour : GetNeighbours(current))
 		{
-			if (neighbour->blocked || neighbour->visited)
+			/*if (neighbour->blocked || neighbour->visited)
 			{
 				continue;
-			}
+			}*/
 
 			float tentative_gCost = gScore[current] + 1;	// assuming uniform
 

@@ -61,6 +61,10 @@ public:
     Color astarColor = Color{ 0, 255, 0, 150 };
     void Astar(Node* start, Node* goal);
 
+    // FSM
+    Node* GetRandomNode();
+    Node* GetGoalNode();
+
 };
 
 #endif

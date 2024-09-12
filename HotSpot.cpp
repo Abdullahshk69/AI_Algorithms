@@ -9,7 +9,7 @@ void Ai::AddHotspot(int row, int col, int radius)
 	this->radius = radius;
 	float weight = 4;
    
-	grid[row][col].weight = weight;
+	//grid[row][col].weight = weight;
 
 	stack<Node*> nodes;
 	nodes.push(&current);
